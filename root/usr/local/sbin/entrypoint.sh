@@ -8,19 +8,10 @@ hex()
 }
 
 echo "Preparing container .."
-COMMAND="/usr/bin/shellinaboxd --debug --no-beep --disable-ssl --disable-ssl-menu --disable-peer-check -u shellinabox -g shellinabox -c /var/lib/shellinabox -p ${SIAB_PORT} --user-css ${SIAB_USERCSS}"
-
-if [ "$SIAB_PKGS" != "none" ]; then
-	set +e
-	/usr/bin/apt-get update
-	/usr/bin/apt-get install -y $SIAB_PKGS
-	/usr/bin/apt-get clean
-	/bin/rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-	set -e
-fi
+COMMAND="/usr/bin/shellinaboxd --debug --no-beep --disable-peer-check -u shellinabox -g shellinabox -c /var/lib/shellinabox -p ${SIAB_PORT} --user-css ${SIAB_USERCSS}"
 
 if [ "$SIAB_SSL" != "true" ]; then
-	COMMAND+=" -t"
+	COMMAND+=" --disable-ssl --disable-ssl-menu"
 fi
 
 if [ "${SIAB_ADDUSER}" == "true" ]; then
@@ -46,24 +37,16 @@ for service in ${SIAB_SERVICE}; do
 	COMMAND+=" -s ${service}"
 done
 
-if [ "$SIAB_SCRIPT" != "none" ]; then
-	set +e
-	/usr/bin/curl -s -k ${SIAB_SCRIPT} > /prep.sh
-	chmod +x /prep.sh
-	echo "Running ${SIAB_SCRIPT} .."
-	/prep.sh
-	set -e
+#Use default public private keys?
+SIAB_USE_PPK=${SIAB_USE_PPK:-false}
+if [ "${SIAB_USE_PPK}" == "true" ]; then
+  if [ ! -d /home/${SIAB_USER}/.ssh  ]; then
+    mkdir /home/${SIAB_USER}/.ssh/ 2>/dev/null
+    cp /opt/ssh/* /home/${SIAB_USER}/.ssh/
+    chmod 400 /home/${SIAB_USER}/.ssh/*
+    chown -R ${SIAB_USER}:${SIAB_USER} /home/${SIAB_USER}/.ssh
+  fi
 fi
-
-#ssh
-if [ ! -d /home/${SIAB_USER}/.ssh  ]; then
-  mkdir /home/${SIAB_USER}/.ssh/ 2>/dev/null
-  cp /opt/ssh/* /home/${SIAB_USER}/.ssh/
-  chmod 400 /home/${SIAB_USER}/.ssh/*
-  chown -R ${SIAB_USER}:${SIAB_USER} /home/${SIAB_USER}/.ssh
-fi
-
-export PS1='$(pwd)> '
 
 echo "Starting container .."
 if [ "$@" = "shellinabox" ]; then
