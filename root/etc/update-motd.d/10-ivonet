@@ -1,0 +1,23 @@
+#!/bin/sh
+cat <<EOT
+          ___            _   _      _           _
+         |_ _|_   _____ | \ | | ___| |_   _ __ | |
+          | |\ \ / / _ \|  \| |/ _ \ __| | '_ \| |
+          | | \ V / (_) | |\  |  __/ |_ _| | | | |
+         |___| \_/ \___/|_| \_|\___|\__(_)_| |_|_|
+
+           Welcome to the steppingstone shell
+
+  Created by Ivo Woltring:
+  * Blog    : https://www.ivonet.nl
+  * Website : https://www.ivowoltring.com
+  * Github  : https://github.com/ivonet
+  * Docker  : https://hub.docker.com/u/ivonet
+  * LinkedIn: https://www.linkedin.com/in/ivonet/
+  * Twitter : @ivonet
+
+  Hands-on lab:
+    To go to one of the terminals type: ssh host[1|2|3|4|..]
+    e.g. ssh host1
+    or   ssh [name@]host2
+EOT
