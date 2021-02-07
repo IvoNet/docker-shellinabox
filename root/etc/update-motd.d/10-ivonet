@@ -17,7 +17,6 @@ cat <<EOT
   * Twitter : @ivonet
 
   Hands-on lab:
-    To go to one of the terminals type: ssh host[1|2|3|4|..]
-    e.g. ssh host1
-    or   ssh [name@]host2
+    To go to one of the terminals type:
+       ssh [username@]host[1|2|3|4|..]
 EOT
