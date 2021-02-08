@@ -63,11 +63,11 @@ then
   if ! grep -q "UserKnownHostsFile" "${HOME_DIR}/.profile"
   then
     echo 'export PS1="\u: \$(pwd)> "' >> "${HOME_DIR}/.profile"
-    echo 'alias ssh="/usr/bin/ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"' >> "${HOME_DIR}/.profile"
+    echo 'alias sshh="/usr/bin/ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"' >> "${HOME_DIR}/.profile"
   fi
 else
   echo 'export PS1="\u: \$(pwd)> "' >> "${HOME_DIR}/.profile"
-  echo 'alias ssh="/usr/bin/ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"' >> "${HOME_DIR}/.profile"
+  echo 'alias sshh="/usr/bin/ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"' >> "${HOME_DIR}/.profile"
 fi
 
 # making sure the used space is owned by the shellinabox user
@@ -78,8 +78,6 @@ do
   COMMAND+=" -s ${service}"
 done
 
-
-#TODO create list of users based on input fle
 
 echo "Starting container .."
 if [ "$@" = "shellinabox" ]; then
